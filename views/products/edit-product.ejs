@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Edit Product</h1>
+    <form action="/products/<%=product._id %>?methos=PUT" method="post">
+         <label for="name">Product Name: </label>
+        <input value="<%=product.name%>" type="text" name="name" id="name">
+
+        <label for="description">Product Description: </label>
+        <input value="<%=product.description%>" type="text" name="description" id="description">
+
+        <label for="price">Price: </label>
+        <input value="<%=product.price%>" type="text" name="price" id="price">
+
+
+
+
+        <label for="category">Product Category: </label>
+            <select name="category" id="category">
+                <% for(let oneCategory of categories){ %>
+
+                    <option <% if(oneCategory._id.equals(product.category)) {%> selected <% } %>value="<%= oneCategory._id %>"> <%=  oneCategory.categoryName%> </option>
+                <% } %>
+            </select>
+        
+
+
+        <button>Edit Product</button>
+    </form>
+</body>
+</html>

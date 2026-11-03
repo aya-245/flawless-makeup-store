@@ -14,5 +14,9 @@
     <p>Product Price: <%= product.price %></p>
     <p>Product Category: <%= product.category.categoryName %></p>
 
+    <form action="/products/<%= product._id %>?_method=DELETE" method="post">
+        <button>Delete Product</button>
+    </form>
+
 </body>
 </html>

@@ -33,4 +33,10 @@ router.get('/:productId', isSignedIn, async (req, res)=>{
     res.render('products/product-details.ejs', {product: foundProduct})
 })
 
+// delete product
+router.delete('/:productId', isSignedIn, async (req, res)=>{
+    const foundProduct = await Product.findById(req.params.productId)
+    await Product.findByIdAndDelete(req.params.productId)
+    res.redirect('/products')
+})
 module.exports = router;

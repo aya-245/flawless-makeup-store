@@ -1,10 +1,13 @@
 const router = require("express").Router()
 const isSignedIn = require("../middleware/is-signed-in")
 const Product = require("../models/Product")
+const Category = require("../models/Category")
 
 // add/create a product
-router.get('/new', isSignedIn, (req, res)=>{
-    res.render('orders/new-order.ejs')
+router.get('/new', isSignedIn, async (req, res)=>{
+    const categories = await Category.find()
+    console.log(categories)
+    res.render('products/new-product.ejs', {categories: categories})
 })
 
 router.post('/', isSignedIn, async (req, res)=>{
@@ -13,9 +16,21 @@ router.post('/', isSignedIn, async (req, res)=>{
         name,
         description,
         price,
-        category: req.session.user._id
+        category
     })
-    res.redirect('/orders')
+    res.redirect('/products')
+})
+
+// read/see all the products
+router.get('/', async (req, res)=>{
+    const allProducts = await Product.find().populate('category')
+    res.render('products/index.ejs', {products: allProducts})
+})
+
+router.get('/:productId', isSignedIn, async (req, res)=>{
+    const foundProduct = await Product.findById(req.params.productId).populate('category')
+    console.log(foundProduct)
+    res.render('products/product-details.ejs', {product: foundProduct})
 })
 
 module.exports = router;

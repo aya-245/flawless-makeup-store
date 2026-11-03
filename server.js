@@ -55,7 +55,8 @@ app.use(passUserToView)
 // Routes go here
 app.use('/auth',authController)
 app.use('/',indexController)
-app.use('/orders',adminController)
+app.use('/products', adminController)
+app.use('/orders',customerController)
 
 
 

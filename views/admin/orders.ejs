@@ -6,6 +6,7 @@
     <title>Document</title>
 </head>
 <body>
+    <%- include('../partials/navbar') %>
     <% for(const order of orders){ %>
         <div>
             <p>Order #<%= order.orderNumber %> by <%= order.user ? order.user.username : 'deleted user' %></p>

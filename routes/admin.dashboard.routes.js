@@ -10,17 +10,15 @@ router.use(isSignedIn, isAdmin)
 router.get('/', async (req, res)=>{
     const productCount = await Product.countDocuments()
     const orderCount = await Order.countDocuments()
-    const pendingCount = await Order.countDocuments({
-        isDelivered: false
-    })
+    const pendingCount = await Order.countDocuments({isDelivered: false})
     const recentOrders = await Order.find().sort({createdAt: -1}).limit(5).populate('user') // finds the orders in descending order
     res.render('admin/dashboard.ejs', {productCount, orderCount, pendingCount, recentOrders})
 })
 
 // see all orders
 router.get("/orders", async (req, res)=>{
-    const allOrders = await Order.find()
-    res.render('admin/orders.ejs', {order: allOrders})
+    const allOrders = await Order.find().sort({createdAt: -1}).populate('user', 'username')
+    res.render('admin/orders.ejs', {orders: allOrders})
 })
 
 // mark an order as delievered

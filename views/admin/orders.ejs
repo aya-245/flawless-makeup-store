@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <% for(const order of orders){ %>
+        <div>
+            <p>Order #<%= order.orderNumber %> by <%= order.user ? order.user.username : 'deleted user' %></p>
+            <p>Total: <%= order.total %></p>
+
+            <% if(order.isDelivered){ %>
+                <p>Delivered</p>
+            <% } else {%>
+                <form action="/admin/orders/<%= order._id %>?_method=PUT" method="post">
+                    <button>Mark as Delivered</button>
+                </form>
+            <% } %>
+        </div>
+    <% } %>
+</body>
+</html>

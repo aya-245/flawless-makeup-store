@@ -5,7 +5,8 @@ const orderSchema = new mongoose.Schema({
     type: Number
   },
   isDelivered: {
-    type: Boolean
+    type: Boolean,
+    default: false
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,

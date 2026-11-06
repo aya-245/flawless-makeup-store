@@ -3,6 +3,10 @@ const isSignedIn = require("../middleware/is-signed-in")
 const Product = require("../models/Product")
 const Category = require("../models/Category")
 
+const isAdmin = require("../middleware/is-admin")
+
+router.use(isSignedIn, isAdmin)
+
 // add/create a product
 router.get('/new', isSignedIn, async (req, res)=>{
     const categories = await Category.find()

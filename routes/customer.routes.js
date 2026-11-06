@@ -4,6 +4,8 @@ const Cart = require("../models/Cart")
 const Order = require("../models/Order")
 const Product = require("../models/Product")
 
+const isCustomer = require("../middleware/is-customer")
+
 
 // shop page
 router.get('/shop', async (req, res)=>{
@@ -12,7 +14,7 @@ router.get('/shop', async (req, res)=>{
 })
 
 // see the cart
-router.get('/cart', isSignedIn, async (req, res)=>{
+router.get('/cart', isSignedIn, isCustomer, async (req, res)=>{
     const foundCart = await Cart.findOne({
         user: req.session.user._id
     }).populate('items.product')
@@ -25,7 +27,7 @@ router.get('/cart', isSignedIn, async (req, res)=>{
 })
 
 // add product to the cart
-router.post('/cart/add/:productId', isSignedIn, async (req, res)=>{
+router.post('/cart/add/:productId', isSignedIn, isCustomer, async (req, res)=>{
     let foundCart = await Cart.findOne({
         user: req.session.user._id
     })
@@ -51,7 +53,7 @@ router.post('/cart/add/:productId', isSignedIn, async (req, res)=>{
 })
 
 //update quantity in the cart
-router.put('/cart/:productId', isSignedIn, async (req, res)=>{
+router.put('/cart/:productId', isSignedIn, isCustomer, async (req, res)=>{
     const quantity = parseInt(req.body.quantity) // turns the html to integer
     const foundCart = await Cart.findOne({
         user: req.session.user._id
@@ -66,7 +68,7 @@ router.put('/cart/:productId', isSignedIn, async (req, res)=>{
 })
 
 // remove product from the cart
-router.delete('/cart/:productId', isSignedIn, async (req, res)=>{
+router.delete('/cart/:productId', isSignedIn, isCustomer, async (req, res)=>{
     await Cart.updateOne(
         {
             user: req.session.user._id
@@ -84,7 +86,7 @@ router.delete('/cart/:productId', isSignedIn, async (req, res)=>{
 })
 
 // checkout (create an order)
-router.post('/', isSignedIn, async (req, res)=>{
+router.post('/', isSignedIn, isCustomer, async (req, res)=>{
     const foundCart = await Cart.findOne({
         user: req.session.user._id
     }).populate('items.product')
@@ -115,7 +117,7 @@ router.post('/', isSignedIn, async (req, res)=>{
 })
 
 // read all my orders
-router.get('/', isSignedIn, async (req, res)=>{
+router.get('/', isSignedIn, isCustomer, async (req, res)=>{
     const allOrders = await Order.find({
         user: req.session.user._id
     })
@@ -123,7 +125,7 @@ router.get('/', isSignedIn, async (req, res)=>{
 })
 
 // read one order
-router.get('/:orderId', isSignedIn, async (req, res)=>{
+router.get('/:orderId', isSignedIn, isCustomer, async (req, res)=>{
     const foundOrder = await Order.findOne({
         _id: req.params.orderId, 
         user: req.session.user._id

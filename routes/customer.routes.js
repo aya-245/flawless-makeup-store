@@ -24,4 +24,30 @@ router.get('/cart', isSignedIn, async (req, res)=>{
     res.render('orders/cart.ejs', {items, total})
 })
 
+// add product to the cart
+router.post('/cart/add/:productId', isSignedIn, async (req, res)=>{
+    let foundCart = await Cart.findOne({
+        user: req.session.user._id
+    })
+    if(!foundCart){
+        foundCart = await Cart.create({
+            user: req.session.user._id,
+            items: []
+        })
+    }
+    // is the product already in the cart?
+    const existingItem = foundCart.items.find(i => i.product.equals(req.params.productId))
+    if(existingItem){
+        existingItem.quantity++
+    }
+    else {
+        foundCart.items.push({
+            product: req.params.productId,
+            quantity: 1
+        })
+    }
+    await foundCart.save()
+    res.redirect('/orders/cart')
+})
+
 module.exports = router;

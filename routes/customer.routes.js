@@ -50,4 +50,19 @@ router.post('/cart/add/:productId', isSignedIn, async (req, res)=>{
     res.redirect('/orders/cart')
 })
 
+//update quantity in the cart
+router.put('/cart/:productId', isSignedIn, async (req, res)=>{
+    const quantity = parseInt(req.body.quantity) // turns the html to integer
+    const foundCart = await Cart.findOne({
+        user: req.session.user._id
+    })
+    const existingItem = foundCart.items.find(i => i.product.equals(req.params.productId))
+
+    if(existingItem && quantity > 0){
+        existingItem.quantity = quantity
+        await foundCart.save()
+    }
+    res.redirect('/orders/cart')
+})
+
 module.exports = router;

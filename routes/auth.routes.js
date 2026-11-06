@@ -3,6 +3,8 @@ const router = express.Router();
 const User = require("../models/User.js");
 const bcrypt = require("bcrypt");
 
+const Role = require("../models/Role.js");
+
 
 // Sign up routes
 router.get("/sign-up", (req, res) => {
@@ -23,8 +25,26 @@ router.post("/sign-up", async (req, res) => {
   req.body.password = hashedPassword;
 
   // validation logic
+  let customerRole = await Role.findOne({
+    roleName: "customer"
+  })
 
-  const user = await User.create(req.body);
+  if(!customerRole){
+    customerRole = await Role.create({
+      roleName: "customer",
+      description: "customer can browse and shop products"
+    })
+  }
+
+  const user = await User.create({
+    username: req.body.username,
+    password: hashedPassword,
+    emailAddress: req.body.emailAddress,
+    phoneNumber: req.body.phoneNumber,
+    streetAddress: req.body.streetAddress,
+    role: customerRole._id
+  })
+
   res.redirect("/auth/sign-in");
 });
 
@@ -39,7 +59,7 @@ router.get("/sign-in", (req, res) => {
 
 router.post("/sign-in", async (req, res) => {
   // First, get the user from the database
-  const userInDatabase = await User.findOne({ username: req.body.username });
+  const userInDatabase = await User.findOne({ username: req.body.username }).populate('role');
   if (!userInDatabase) {
     return res.send("Login failed. Please try again.");
   }
@@ -59,7 +79,7 @@ router.post("/sign-in", async (req, res) => {
   req.session.user = {
     username: userInDatabase.username,
     _id: userInDatabase._id,
-    role: userInDatabase.role
+    role: userInDatabase.role ? userInDatabase.role.roleName : null
   };
 
   res.redirect("/");

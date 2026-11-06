@@ -17,6 +17,7 @@ const authController = require("./routes/auth.routes.js");
 const indexController = require("./routes/index.routes.js");
 const customerController = require("./routes/customer.routes.js")
 const adminController = require("./routes/admin.routes.js")
+const adminDashboardController = require("./routes/admin.dashboard.routes.js")
 
 
 // Middleware
@@ -56,7 +57,8 @@ app.use(passUserToView)
 app.use('/auth',authController)
 app.use('/',indexController)
 app.use('/products', adminController)
-app.use('/orders',customerController)
+app.use('/orders', customerController)
+app.use('/admin', adminDashboardController)
 
 
 

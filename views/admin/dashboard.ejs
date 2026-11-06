@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+
+    <p>Products: <%= productCount %></p>
+    <p>Orders: <%= orderCount %></p>
+    <p>Not Delivered Yet: <%= pendingCount %></p>
+
+    <a href="/products/new">Add a Product</a>
+    <a href="/products">Manage Products</a>
+    <a href="/admin/orders">All Orders</a>
+
+    <h2>Recent Orders</h2>
+    <% for(const order of recentOrders){ %>
+        <p>
+            Order #<%= order.orderNumber %> by <%= order.user ? order.user.username : 'deleted user' %>
+            - <%= order.total %> - <%= order.isDelivered ? 'Delivered' : 'Not Delivered' %>
+        </p>
+    <% } %>
+</body>
+</html>

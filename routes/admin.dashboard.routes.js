@@ -13,7 +13,8 @@ router.get('/', async (req, res)=>{
     const pendingCount = await Order.countDocuments({
         isDelivered: false
     })
-    res.render('admin/dashboard.ejs', {productCount, orderCount, pendingCount})
+    const recentOrders = await Order.find().sort({createdAt: -1}).limit(5).populate('user') // finds the orders in descending order
+    res.render('admin/dashboard.ejs', {productCount, orderCount, pendingCount, recentOrders})
 })
 
 // see all orders

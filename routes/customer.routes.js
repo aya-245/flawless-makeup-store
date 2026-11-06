@@ -83,4 +83,35 @@ router.delete('/cart/:productId', isSignedIn, async (req, res)=>{
     res.redirect('/orders/cart')
 })
 
+// checkout (create an order)
+router.post('/', isSignedIn, async (req, res)=>{
+    const foundCart = await Cart.findOne({
+        user: req.session.user._id
+    }).populate('items.product')
+    if(!foundCart || !foundCart.items.length){
+        return res.redirect('/orders/cart')
+    }
+
+    const items = foundCart.items.map(i=>({
+        product: i.product._id,
+        quantity: i.quantity,
+        price: i.product.price
+    }))
+
+    let total = 0
+    for (const item of items) {
+    total += item.price * item.quantity
+    }
+
+    const createdOrder = await Order.create({
+        orderNumber: Date.now(), // creats a number that represents the number of millieseconds since 1/1/1970
+        user: req.session.user._id,
+        items,
+        total
+    })
+    foundCart.items = []
+    await foundCart.save() // saves it into the DB
+    res.redirect('/orders/' + createdOrder._id)
+})
+
 module.exports = router;

@@ -65,4 +65,22 @@ router.put('/cart/:productId', isSignedIn, async (req, res)=>{
     res.redirect('/orders/cart')
 })
 
+// remove product from the cart
+router.delete('/cart/:productId', isSignedIn, async (req, res)=>{
+    await Cart.updateOne(
+        {
+            user: req.session.user._id
+        },
+        {
+            $pull: {
+                items: {
+                    product: req.params.productId
+                }
+            }
+        }
+
+    )
+    res.redirect('/orders/cart')
+})
+
 module.exports = router;

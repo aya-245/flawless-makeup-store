@@ -6,7 +6,6 @@ const Category = require("../models/Category")
 // add/create a product
 router.get('/new', isSignedIn, async (req, res)=>{
     const categories = await Category.find()
-    console.log(categories)
     res.render('products/new-product.ejs', {categories: categories})
 })
 

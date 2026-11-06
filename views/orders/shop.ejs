@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Shop</h1>
+
+    <% if(products.length === 0){ %>
+        <p>No Products Available Yet</p>
+    <% } %>
+
+    <% for(const product of products){ %>
+        <div>
+            <h3><%= product.name %></h3>
+            <p><%= product.description %></p>
+            <p>Price: <%= product.price %></p>
+            <p>Category: <%= product.category ? product.category.categoryName : 'None' %></p>
+
+            <form action="/orders/cart/add/<%= product._id %>" method="post">
+            <button>Add to cart</button>
+            </form>
+        </div>
+    <% } %>
+
+    <a href="/orders/cart">Go to Cart</a>
+    <a href="/orders">My Orders</a>
+</body>
+</html>

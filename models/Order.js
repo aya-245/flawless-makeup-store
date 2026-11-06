@@ -4,12 +4,6 @@ const orderSchema = new mongoose.Schema({
   orderNumber: {
     type: Number
   },
-  price: {
-    type: Number
-  },
-  quantity: {
-    type: Number
-  },
   isDelivered: {
     type: Boolean
   },
@@ -17,10 +11,21 @@ const orderSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   },
-  product: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Product'
-  }]
+  items: [{
+    product: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Product'
+    },
+    quantity: {
+      type: Number
+    },
+    price: {
+      type: Number
+    },
+  }],
+  total: {
+    type: Number
+  }
 }, {timestamps: true});
 
 const Order = mongoose.model("Order", orderSchema);

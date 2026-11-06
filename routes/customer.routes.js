@@ -114,4 +114,21 @@ router.post('/', isSignedIn, async (req, res)=>{
     res.redirect('/orders/' + createdOrder._id)
 })
 
+// read all my orders
+router.get('/', isSignedIn, async (req, res)=>{
+    const allOrders = await Order.find({
+        user: req.session.user._id
+    })
+    res.render('orders/index.ejs', {orders: allOrders})
+})
+
+// read one order
+router.get('/:orderId', isSignedIn, async (req, res)=>{
+    const foundOrder = await Order.findOne({
+        _id: req.params.orderId, 
+        user: req.session.user._id
+    }).populate('items.product')
+    res.render('orders/order-details.ejs', {order: foundOrder})
+})
+
 module.exports = router;

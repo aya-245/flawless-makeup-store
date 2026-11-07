@@ -82,6 +82,13 @@ router.post("/sign-in", async (req, res) => {
     role: userInDatabase.role ? userInDatabase.role.roleName : null
   };
 
+  if(req.session.user.role === "admin"){
+    return res.redirect('/admin')
+  }
+  if(req.session.user.role === "driver"){
+    return res.redirect('/delivery')
+  }
+
   res.redirect("/");
 });
 

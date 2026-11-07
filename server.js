@@ -12,12 +12,14 @@ const connectToDB = require('./db.js')
 const isSignedIn = require("./middleware/is-signed-in.js");
 const passUserToView = require("./middleware/pass-user-to-view.js");
 
+
 // routes Imports
 const authController = require("./routes/auth.routes.js");
 const indexController = require("./routes/index.routes.js");
 const customerController = require("./routes/customer.routes.js")
 const adminController = require("./routes/admin.routes.js")
 const adminDashboardController = require("./routes/admin.dashboard.routes.js")
+const deliveryController = require("./routes/delivery.driver.routes.js")
 
 
 // Middleware
@@ -59,6 +61,7 @@ app.use('/',indexController)
 app.use('/products', adminController)
 app.use('/orders', customerController)
 app.use('/admin', adminDashboardController)
+app.use('/delivery', deliveryController)
 
 
 

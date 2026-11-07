@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Delivery Driver Dashboard</h1>
+
+    <p>Delivered by me: <%= deliveredCount %></p>
+    <p>Orders waiting for a driver: <%= pendingCount %></p>
+
+    <h2>My Current Order</h2>
+
+    <% if(currentOrder){ %>
+        <div>
+            <p>Order # <%= currentOrder.orderNumber %></p>
+            <p>Customer: <%= currentOrder.user ? currentOrder.user.username : 'deleted user' %></p>
+            <p>Phone Number: <%= currentOrder.user ? currentOrder.user.phoneNumber : '' %></p>
+            <p>Address: <%= currentOrder.user ? currentOrder.user.streetAddress : '' %></p>
+            <p>Total: <%= currentOrder.total %></p>
+
+            <h3>Items</h3>
+            <% for(const item of currentOrder.items){ %>
+                <p>
+                    <%= item.product ? item.product.name : 'prodcut no longer available' %>
+                    x <%= item.quantity %>
+                </p>
+            <% } %>
+
+            <form action="/delivery/<%= currentOrder._id %>?_method=PUT" method="post">
+                <button>Mark as Delivered</button>
+            </form>
+        </div>
+    <% } else { %>
+        <p>You have no order to deliver at the moment.</p>
+        <% if(pendingCount > 0){ %>
+            <form action="/delivery/next" method="post">
+                <button>Get next order</button>
+            </form>
+        <% } else { %>
+            <p>No orders need to be delivered.</p>
+        <% } %>
+    <% } %>
+</body>
+</html>

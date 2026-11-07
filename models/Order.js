@@ -26,6 +26,10 @@ const orderSchema = new mongoose.Schema({
   }],
   total: {
     type: Number
+  },
+  driver: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
   }
 }, {timestamps: true});
 

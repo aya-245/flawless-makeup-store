@@ -14,6 +14,10 @@
         <a href="/orders">My Orders</a>
     <% } %>
 
+    <% if(user.role === 'driver'){ %>
+        <a href="/delivery">Dashboard</a>
+    <% } %>
+
     <a href="/auth/sign-out">Logout</a>
 
     <% } else { %>

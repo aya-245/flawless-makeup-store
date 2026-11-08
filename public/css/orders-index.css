@@ -1,0 +1,49 @@
+.order-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.order-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.order-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(217, 69, 107, 0.12);
+}
+
+.order-number {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.order-number:hover {
+  color: var(--pink);
+  text-decoration: underline;
+}
+
+.order-main p {
+  margin: 4px 0 0;
+}
+
+.order-status {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.order-total {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.empty-actions {
+  text-align: center;
+}

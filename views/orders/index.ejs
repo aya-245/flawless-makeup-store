@@ -3,22 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Orders</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/orders-index.css">
+
 </head>
 <body>
     <%- include('../partials/navbar') %>
 
-    <h1>My Orders</h1>
-    <% if(orders.length === 0){ %>
-        <p>You have no orders yet</p>
-    <% } %>
+    <main class="page">
 
-    <% for(const order of orders){ %>
-        <div>
-            <a href="/orders/<%= order._id %>">Order #<%= order.orderNumber %></a>
-            <p>Total: <%= order.total %></p>
-            <p><%= order.isDelivered ? 'Delivered' : 'Not Delivered Yet' %></p>
+        <div class="page-header">
+            <h1>My Orders</h1>
+            <p class="muted"><%= orders.length %> <%= orders.length === 1 ? 'order' : 'orders' %></p>
         </div>
-    <% } %>
+
+        <% if(orders.length === 0){ %>
+            <div class="empty-actions">
+                <p class="empty muted">You have no orders yet</p>
+                <p href="/orders/shop" class="button">Start shopping</p>
+            </div>
+        <% } %>
+
+        <div class="order-list">
+            <% for(const order of orders){ %>
+            <div class="card order-card">
+                <div class="order-main">
+                    <a class="order-number" href="/orders/<%= order._id %>">Order #<%= order.orderNumber %></a>
+                    <p class="muted">
+                        Placed on <%= order.createdAt.toDateString() %>
+                        <%= order.items.length %> <%= order.items.length === 1 ? 'item' : 'items' %>
+                    </p>
+                </div>
+
+                <div class="order-status">
+                    <% if(order.isDelivered){ %>
+                        <span class="status status-delivered"></span>
+                    <% } else { %>
+                        <span class="status status-pending">Not delivered yet</span>
+                    <% } %>
+                    <span class="order-total">BD <%= order.total %></span>
+                </div>
+                <a href="/orders/<%= order._id %>" class="button button-outline">View Details</a>
+            </div>
+        <% } %>
+            
+        </div>
+    </main>
 </body>
 </html>

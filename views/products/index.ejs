@@ -9,6 +9,11 @@
     <%- include('../partials/navbar') %>
     <h1>All Products</h1>
     <% for(let oneProduct of products){ %>
+            <% if(oneProduct.image){ %>
+                <img src="<%=oneProduct.image%>" alt="<%=oneProduct.name%>" style="display:block; width:220px; aspect-ratio:1/1; object-fit:cover; border-radius:14px;">
+            <% } else {%>
+                <div style="display:block; width:220px; aspect-ratio:1/1; background:#f0bcc0; border-radius:14px;"></div>
+            <% } %>
         <p>Name: <%= oneProduct.name %></p>
         <a href="/products/<%= oneProduct._id %>">See Details</a>
     <% } %>

@@ -16,6 +16,12 @@
 
     <% for(const product of products){ %>
         <div>
+            <% if(product.image){ %>
+                <img src="<%=product.image%>" alt="<%=product.name%>" style="display:block; width:220px; aspect-ratio:1/1; object-fit:cover; border-radius:14px;">
+            <% } else {%>
+                <div style="display:block; width:220px; aspect-ratio:1/1; background:#f0bcc0; border-radius:14px;"></div>
+            <% } %>
+            
             <h3><%= product.name %></h3>
             <p><%= product.description %></p>
             <p>Price: <%= product.price %></p>

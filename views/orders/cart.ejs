@@ -9,6 +9,10 @@
     <%- include('../partials/navbar') %>
 
     <h1>Cart</h1>
+    <% if (item.product.image) { %>
+        <img src="<%= item.product.image %>" alt="<%= item.product.name %>"
+       style="width:90px; aspect-ratio:1/1; object-fit:cover; border-radius:12px;">
+    <% } %>
 
     <% if (items.length) { %>
         <p>Total: <%= total %></p>

@@ -9,7 +9,7 @@
     <%- include('../partials/navbar') %>
 
     <h1>Edit Product</h1>
-    <form action="/products/<%=product._id %>?methos=PUT" method="post">
+    <form action="/products/<%=product._id %>?_method=PUT" method="post" enctype="multipart/form-data">
          <label for="name">Product Name: </label>
         <input value="<%=product.name%>" type="text" name="name" id="name">
 
@@ -26,6 +26,10 @@
                     <option <% if(oneCategory._id.equals(product.category)) {%> selected <% } %>value="<%= oneCategory._id %>"> <%=  oneCategory.categoryName%> </option>
                 <% } %>
             </select>
+        
+        <!-- allows file picker to only show images -->
+        <label for="image">Product Image</label>
+        <input type="file" name="image" id="image" accept="image/*">
         
 
 

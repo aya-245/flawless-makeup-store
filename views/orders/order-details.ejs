@@ -3,26 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Order Details</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/order-details.css">
+
 </head>
 <body>
-    <h1>Order # <%= order.orderNumber %></h1>
+    <%- include('../partials/navbar') %>
 
-    <p>Status: <%= order.isDelivered ? 'Delivered' : 'Not Delivered Yet' %></p>
+    <main class="page">
 
-    <h2>Items</h2>
-    <% for(const item of order.items){ %>
-        <div>
-            <% if(item.product) {%>
-                <p><%= item.product.name %></p>
-            <% } else{ %>
-                <p>(product no longer available)</p>
+        <div class="order-header">
+        <h1>Order # <%= order.orderNumber %></h1>
+            <% if(order.isDelivered){ %>
+                <span class="status status-delivered">Delivered</span>
+            <% } else {%>
+                <span class="status status-pending">Not Delivered Yet</span>
             <% } %>
-            <p><%= item.price %> x <%= item.quantity %></p>
         </div>
-    <% } %>
 
-    <h3>Total: <%= order.total %></h3>
-    <a href="/orders">Back to my orders</a>
+        <p class="muted order-info">Placed on <%= order.createdAt.toDateString() %></p>
+
+        <div class="tracker">
+
+                <div class="step done">
+                    <div class="step-circle">✓</div>
+                    Order Placed
+                </div>
+            
+            <div class="step <%= order.driver ? 'done' : '' %>">
+                <div class="step-circle"><%= order.driver ? '✓' : '' %></div>
+                With Driver
+            </div>
+
+            <div class="step <%= order.isDelivered ? 'done' : '' %>">
+                <div class="step-circle"><%= order.isDelivered ? '✓' : '' %></div>
+                Delivered
+            </div>
+        </div>
+
+        <div class="order-layout">
+            <section class="order-items">
+
+                <h2>Items</h2>
+
+                <% for(const item of order.items){ %>
+                    <div class="card order-item">
+
+                        <% if(item.product && item.product.image){ %>
+                            <img class="item-image" src="<%= item.product.image %>" alt="<%= item.product.name %>">
+                        <% } else {%>
+                            <div class="item-image"></div>
+                        <% } %>
+
+                        <div class="item-info">
+                            <% if(item.product) {%>
+                                <h3><%= item.product.name %></h3>
+                            <% } else{ %>
+                                <h3>(product no longer available)</h3>
+                            <% } %>
+                            <p class="muted">BD <%= item.price %> x <%= item.quantity %></p>
+                        </div>
+                        <span class="item-total">BD <%= Number(item.price * item.quantity) %></span>
+                    </div>
+                <% } %>
+            </section>
+            <div class="card summary">
+                <h2>Order Summary</h2>
+
+                <div class="summary-row">
+                    <span>Items</span>
+                    <span><%= order.items.length %></span>
+                </div>
+
+                <div class="summary-total">
+                    <span>Total</span>
+                    <span>BD <%= order.total %></span>
+                </div>
+                <a class="back-link" href="/orders">Back to my orders</a>
+            </div>
+        </div>
+    </main>
 </body>
 </html>

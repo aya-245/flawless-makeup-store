@@ -115,3 +115,22 @@ h1, h2, .logo {
   font-size: 28px;
 }
 
+/* ---------- status pills ---------- */
+.status {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-delivered {
+  background: #dff3e8;
+  color: #1f6b43;
+}
+
+.status-pending {
+  background: #fde3e8;
+  color: #9a2347;
+}
+

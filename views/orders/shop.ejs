@@ -3,37 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Shop</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/shop.css">
 </head>
 <body>
     <%- include('../partials/navbar') %>
 
-    <h1>Shop</h1>
+<main class="page">
+    <section class="hero">
+        <p class="banner">Flawless Makeup</p>
+        <h1>Color you can feel</h1>
+        <p>Vegan, long-lasting formulas for the lips with swwetly scented glosses, tints, and lip liners.</p>
+    </section>
+
+    <div class="shop-header">
+        <h2>Shop</h2>
+        <p class="muted"><%= products.length %> products</p>
+    </div>
 
     <% if(products.length === 0){ %>
-        <p>No Products Available Yet</p>
+        <p class="empty muted">No Products Available Yet</p>
     <% } %>
 
-    <% for(const product of products){ %>
-        <div>
-            <% if(product.image){ %>
-                <img src="<%=product.image%>" alt="<%=product.name%>" style="display:block; width:220px; aspect-ratio:1/1; object-fit:cover; border-radius:14px;">
-            <% } else {%>
-                <div style="display:block; width:220px; aspect-ratio:1/1; background:#f0bcc0; border-radius:14px;"></div>
-            <% } %>
-            
-            <h3><%= product.name %></h3>
-            <p><%= product.description %></p>
-            <p>Price: <%= product.price %></p>
-            <p>Category: <%= product.category ? product.category.categoryName : 'None' %></p>
+    <div class="product-grid">
+        <% for(const product of products){ %>
+            <div class="product-card">
+                    <% if(product.image){ %>
+                        <img class="product-image" src="<%=product.image%>" alt="<%=product.name%>">
+                    <% } else {%>
+                        <div class="product-image placeholder" style="display:block; width:220px; aspect-ratio:1/1; background:#f0bcc0; border-radius:14px;"></div>
+                    <% } %>
 
-            <form action="/orders/cart/add/<%= product._id %>" method="post">
-            <button>Add to cart</button>
-            </form>
-        </div>
-    <% } %>
+                <div class="product-info">
+                    <% if(product.category){ %>
+                        <span class="category-label"><%=product.category.categoryName %></span>
+                    <% } %>
+                    
+                    <h3><%= product.name %></h3>
+                    <p class="muted description"><%=product.description %></p>
+
+                    <div class="product-bottom">
+                        <span class="price">BD  <%= product.price %></span></span>
+                        <form action="/orders/cart/add/<%= product._id %>" method="post">
+                        <button class="button">Add to cart</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+    </div>
 
     <a href="/orders/cart">Go to Cart</a>
     <a href="/orders">My Orders</a>
+</main>
 </body>
 </html>

@@ -1,0 +1,117 @@
+:root {
+  --cream: #fcf7f1;
+  --mint: #c6e7df;
+  --blush: #f0bcc0;
+  --pink: #d9456b;
+  --dark-pink: #b8325a;
+  --black: #111;
+  --gray: #666;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--black);
+  margin: 0;
+}
+
+a {
+  color: var(--black);
+  text-decoration: none;
+}
+
+h1, h2, .logo {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+}
+
+.button {
+  background: var(--black);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 28px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: inherit;
+  transition: background 0.2s;
+}
+
+.button:hover {
+  background: var(--dark-pink);
+}
+
+.button:focus-visible {
+  outline: 3px solid var(--pink);
+  outline-offset: 2px;
+}
+
+.btn-small {
+  padding: 10px 20px;
+  font-size: 13px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.number-of-products {
+  color: var(--gray);
+  font-size: 13px;
+}
+
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px 64px;
+}
+
+/* ---------- navbar ---------- */
+.announcement {
+  background: var(--mint);
+  text-align: center;
+  font-size: 13px;
+  padding: 9px;
+  letter-spacing: 0.3px;
+}
+
+.navbar {
+  background: #fff;
+  border-bottom: 1px solid #eee;
+}
+
+.nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 40px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+.nav-left,
+.nav-right {
+  display: flex;
+  gap: 28px;
+  flex: 1;
+}
+
+.nav-right {
+  justify-content: flex-end;
+}
+
+.nav-inner a:hover {
+  color: var(--pink);
+}
+
+.logo {
+  font-size: 28px;
+}
+

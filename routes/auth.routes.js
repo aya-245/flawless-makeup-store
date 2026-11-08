@@ -12,6 +12,7 @@ router.get("/sign-up", (req, res) => {
 });
 
 router.post("/sign-up", async (req, res) => {
+  console.log(req.body)
   const userInDatabase = await User.findOne({ username: req.body.username });
   if (userInDatabase) {
     return res.send("Username already taken.");
@@ -42,7 +43,10 @@ router.post("/sign-up", async (req, res) => {
     emailAddress: req.body.emailAddress,
     phoneNumber: req.body.phoneNumber,
     streetAddress: req.body.streetAddress,
-    role: customerRole._id
+    role: customerRole._id,
+    // if the user didn't click on the map, save nothing
+    latitude: req.body.latitude || undefined,
+    longitude: req.body.longitude || undefined
   })
 
   res.redirect("/auth/sign-in");

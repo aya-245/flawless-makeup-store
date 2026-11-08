@@ -14,19 +14,25 @@ const userSchema = new mongoose.Schema({
   },
   emailAddress: {
     type: String,
-    // required: true
+    required: true
   },
   phoneNumber: {
     type: Number,
-    // required: true
+    required: true
   },
   streetAddress: {
     type: String,
-    // required: true
+    required: true
   },
   role: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Role'
+  },
+  latitude : {
+    type: Number
+  },
+  longitude: {
+    type: Number
   }
 }, {timestamps: true});
 

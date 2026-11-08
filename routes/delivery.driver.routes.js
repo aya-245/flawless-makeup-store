@@ -10,7 +10,7 @@ router.get('/', async (req, res)=>{
     const currentOrder = await Order.findOne({
         driver: req.session.user._id,
         isDelivered: false
-    }).populate('user', 'username phoneNumber streetAddress').populate('items.product')
+    }).populate('user', 'username phoneNumber streetAddress latitude longitude').populate('items.product')
 
     const deliveredCount = await Order.countDocuments({
         driver: req.session.user._id,
@@ -64,5 +64,7 @@ router.put('/:orderId', async (req, res)=>{
     )
     res.redirect('/delivery')
 })
+
+
 
 module.exports = router

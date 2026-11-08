@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@2.0.0-beta.1/dist/leaflet.css">
+<script type="importmap">
+{"imports": {"leaflet": "https://cdn.jsdelivr.net/npm/leaflet@2.0.0-beta.1/dist/leaflet.js"}}
+</script>
+
 </head>
 <body>
     <%- include('../partials/navbar') %>
@@ -15,6 +20,16 @@
     <h2>My Current Order</h2>
 
     <% if(currentOrder){ %>
+        <% if (currentOrder.user && currentOrder.user.latitude && currentOrder.user.longitude) { %>
+            <!-- put the customer's location in attributes -->
+            <div id="map" style="height: 400px;"
+                data-lat="<%= currentOrder.user.latitude %>"
+                data-lng="<%= currentOrder.user.longitude %>"></div>
+            <% } else { %>
+            <!-- users who skipped the map have no location -->
+            <p>This customer did not choose a location on the map.</p>
+        <% } %>
+
         <div>
             <p>Order # <%= currentOrder.orderNumber %></p>
             <p>Customer: <%= currentOrder.user ? currentOrder.user.username : 'deleted user' %></p>
@@ -44,5 +59,46 @@
             <p>No orders need to be delivered.</p>
         <% } %>
     <% } %>
+
+
+    <script type="module">
+    import {LeafletMap, TileLayer, Marker, Polyline} from 'leaflet';
+
+    // the map div only exists if the customer has a location, otherwise this is null
+    const mapDiv = document.getElementById('map')
+
+    if (mapDiv) {
+        // convert data attributes to numbers
+        const customerLat = parseFloat(mapDiv.dataset.lat)
+        const customerLng = parseFloat(mapDiv.dataset.lng)
+
+        // create the map picked by the customer and increase zoom level to 14
+        const map = new LeafletMap('map').setView([customerLat, customerLng], 14)
+
+        // add the openstreet text
+        new TileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map)
+
+        // shows the customer's pin for the driver with a popup
+        new Marker([customerLat, customerLng]).addTo(map).bindPopup('Customer').openPopup()
+
+        // asks for the driver's permission to get their current location
+        navigator.geolocation.getCurrentPosition(function (position) {
+        const driverLat = position.coords.latitude
+        const driverLng = position.coords.longitude
+
+        // shows the driver's pin on the map
+        new Marker([driverLat, driverLng]).addTo(map).bindPopup('You')
+
+        // adds a line between the driver's and customer's location
+        new Polyline([[driverLat, driverLng], [customerLat, customerLng]]).addTo(map)
+
+        // zoom the map so it shows both pins
+        map.fitBounds([[driverLat, driverLng], [customerLat, customerLng]], { padding: [40, 40] })
+        })
+    }
+    </script>
 </body>
 </html>

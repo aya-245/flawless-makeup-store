@@ -5,62 +5,98 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@2.0.0-beta.1/dist/leaflet.css">
-<script type="importmap">
-{"imports": {"leaflet": "https://cdn.jsdelivr.net/npm/leaflet@2.0.0-beta.1/dist/leaflet.js"}}
-</script>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/delivery/dashboard.css">
+    <script type="importmap">
+    {"imports": {"leaflet": "https://cdn.jsdelivr.net/npm/leaflet@2.0.0-beta.1/dist/leaflet.js"}}
+    </script>
 
 </head>
 <body>
     <%- include('../partials/navbar') %>
-    <h1>Delivery Driver Dashboard</h1>
-
-    <p>Delivered by me: <%= deliveredCount %></p>
-    <p>Orders waiting for a driver: <%= pendingCount %></p>
-
-    <h2>My Current Order</h2>
-
-    <% if(currentOrder){ %>
-        <% if (currentOrder.user && currentOrder.user.latitude && currentOrder.user.longitude) { %>
-            <!-- put the customer's location in attributes -->
-            <div id="map" style="height: 400px;"
-                data-lat="<%= currentOrder.user.latitude %>"
-                data-lng="<%= currentOrder.user.longitude %>"></div>
-            <% } else { %>
-            <!-- users who skipped the map have no location -->
-            <p>This customer did not choose a location on the map.</p>
-        <% } %>
-
-        <div>
-            <p>Order # <%= currentOrder.orderNumber %></p>
-            <p>Customer: <%= currentOrder.user ? currentOrder.user.username : 'deleted user' %></p>
-            <p>Phone Number: <%= currentOrder.user ? currentOrder.user.phoneNumber : '' %></p>
-            <p>Address: <%= currentOrder.user ? currentOrder.user.streetAddress : '' %></p>
-            <p>Total: <%= currentOrder.total %></p>
-
-            <h3>Items</h3>
-            <% for(const item of currentOrder.items){ %>
-                <p>
-                    <%= item.product ? item.product.name : 'prodcut no longer available' %>
-                    x <%= item.quantity %>
-                </p>
-            <% } %>
-
-            <form action="/delivery/<%= currentOrder._id %>?_method=PUT" method="post">
-                <button>Mark as Delivered</button>
-            </form>
+    <main class="page">
+        <div class="page-header">
+            <h1>Delivery Driver Dashboard</h1>
         </div>
-    <% } else { %>
-        <p>You have no order to deliver at the moment.</p>
-        <% if(pendingCount > 0){ %>
-            <form action="/delivery/next" method="post">
-                <button>Get next order</button>
-            </form>
+
+        <div class="stats">
+            <div class="card stat-card">
+                <span class="stat-number"><%= deliveredCount %></span>
+                <span class="stat-label">Delivered by me</span>
+            </div>
+            <div class="card stat-card">
+                <span class="stat-number"><%=pendingCount %></span>
+                <span class="stst-label">Orders waiting for a driver</span>
+            </div>
+        </div>
+
+        <h2 class="section-title">My Current Order</h2>
+
+        <% if(currentOrder){ %>
+            <div class="delivery-layout">
+                <div class="card map-card">
+                    <% if (currentOrder.user && currentOrder.user.latitude && currentOrder.user.longitude) { %>
+                    <!-- put the customer's location in attributes -->
+                        <div id="map" style="height: 400px;"
+                        data-lat="<%= currentOrder.user.latitude %>"
+                        data-lng="<%= currentOrder.user.longitude %>"></div>
+                    <% } else { %>
+                        <!-- users who skipped the map have no location -->
+                        <p class="no-map">This customer did not choose a location on the map.</p>
+                    <% } %>
+                </div>
+                
+                <div class="card delivery-details">
+                    <div class="details-top">
+                        <h3>Order # <%= currentOrder.orderNumber %></h3>
+                        <span class="status status-pending">Out for delivery</span>
+                    </div>
+                    <div class="detail-row">
+                        <span>Customer</span>
+                        <span><%= currentOrder.user ? currentOrder.user.username : 'deleted user' %></span>
+                    </div>
+                    <div class="detail-row">
+                        <span>Phone Number</span>
+                        <span><%= currentOrder.user ? currentOrder.user.phoneNumber : '' %></span>
+                    </div>
+                    <div class="detail-row">
+                        <span>Address</span>
+                        <span><%= currentOrder.user ? currentOrder.user.streetAddress : '' %></span>
+                    </div>
+
+                    <h4>Items</h4>
+                    <% for(const item of currentOrder.items){ %>
+                        <div class="delivery-item">
+                            <span><%= item.product ? item.product.name : 'prodcut no longer available' %></span>
+                            <span>x <%= item.quantity %></span>
+                        </div>
+                <% } %>
+
+                <div class="delivery-total">
+                    <span>Total</span>
+                    <span>BD <%= currentOrder.total %></span>
+                </div>
+
+                    <form action="/delivery/<%= currentOrder._id %>?_method=PUT" method="post">
+                        <button class="button">Mark as Delivered</button>
+                    </form>
+                </div>
+            </div>
+
         <% } else { %>
-            <p>No orders need to be delivered.</p>
+            <div class="card empty-card">
+                <p>You have no order to deliver at the moment.</p>
+                <% if(pendingCount > 0){ %>
+                    <form action="/delivery/next" method="post">
+                        <button>Get next order</button>
+                    </form>
+                <% } else { %>
+                    <p class="no-orders">No orders need to be delivered.</p>
+                <% } %>
+            </div>
         <% } %>
-    <% } %>
 
-
+    </main>
     <script type="module">
     import {LeafletMap, TileLayer, Marker, Polyline} from 'leaflet';
 
@@ -100,5 +136,6 @@
         })
     }
     </script>
+
 </body>
 </html>

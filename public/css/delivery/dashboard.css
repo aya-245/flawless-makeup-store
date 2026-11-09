@@ -1,0 +1,140 @@
+.stats {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+.stat-card {
+  flex: 1;
+  min-width: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat-number {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 13px;
+  color: var(--gray);
+}
+
+.section-title {
+  font-size: 26px;
+  margin: 0 0 16px;
+}
+
+.delivery-layout {
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.map-card {
+  flex: 2;
+  min-width: 320px;
+  padding: 12px;
+}
+
+.delivery-map {
+  height: 400px;
+  border-radius: 14px;
+  z-index: 0;
+}
+
+.no-map {
+  margin: 0;
+  padding: 48px 20px;
+  text-align: center;
+  color: var(--gray);
+  background: var(--cream);
+  border-radius: 14px;
+}
+
+.delivery-details {
+  flex: 1;
+  min-width: 280px;
+}
+
+.details-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.details-top h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+
+.detail-row span:first-child {
+  color: var(--gray);
+}
+
+.detail-row span:last-child {
+  text-align: right;
+  font-weight: 500;
+}
+
+.delivery-details h4 {
+  font-size: 15px;
+  margin: 20px 0 10px;
+}
+
+.delivery-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.delivery-item span:last-child {
+  color: var(--gray);
+  white-space: nowrap;
+}
+
+.delivery-total {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+  font-size: 18px;
+  border-top: 1px solid #eee;
+  padding-top: 14px;
+  margin: 14px 0 24px;
+}
+
+.delivery-details .button {
+  width: 100%;
+  text-align: center;
+}
+
+.empty-card {
+  text-align: center;
+  padding: 48px 20px;
+}
+
+.empty-card p {
+  margin: 0 0 20px;
+}
+
+.empty-card .no-orders {
+  margin: 0;
+  color: var(--gray);
+}

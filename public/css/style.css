@@ -70,14 +70,6 @@ h1, h2, .logo {
 }
 
 /* ---------- navbar ---------- */
-.announcement {
-    background: var(--mint);
-    text-align: center;
-    font-size: 13px;
-    padding: 9px;
-    letter-spacing: 0.3px;
-}
-
 .navbar {
     background: #fff;
     border-bottom: 1px solid #eee;

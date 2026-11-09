@@ -1,0 +1,79 @@
+.quick-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.stats {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+.stat-card {
+  flex: 1;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat-number {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 13px;
+  color: var(--gray);
+}
+
+.section-title {
+  font-size: 26px;
+  margin: 0 0 16px;
+}
+
+.recent-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.recent-order {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.recent-order:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(217, 69, 107, 0.12);
+}
+
+.recent-number {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.recent-main p {
+  margin: 4px 0 0;
+  color: var(--gray);
+}
+
+.recent-side {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.recent-total {
+  font-weight: 700;
+  font-size: 18px;
+}

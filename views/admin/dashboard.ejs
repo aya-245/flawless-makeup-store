@@ -3,26 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/admin/dashboard.css">
 </head>
 <body>
     <%- include('../partials/navbar') %>
-    <h1>Admin Dashboard</h1>
 
-    <p>Products: <%= productCount %></p>
-    <p>Orders: <%= orderCount %></p>
-    <p>Not Delivered Yet: <%= pendingCount %></p>
+    <main class="page">
+        <div class="page-header">
+            <h1>Admin Dashboard</h1>
+            <div class="quick-actions">
+                <a class="button" href="/products/new">Add a product</a>
+                <a class="button" href="/products">Manage Products</a>
+                <a class="button" href="/admin/orders">All Orders</a>
+            </div>
+        </div>
 
-    <a href="/products/new">Add a Product</a>
-    <a href="/products">Manage Products</a>
-    <a href="/admin/orders">All Orders</a>
+        <div class="stats">
+            <div class="card stat-card">
+                <span class="stat-number"><%= productCount %></span>
+                <span class="stat-label">Products</span>
+            </div>
+            
+            <div class="card stat-number">
+                <span class="stat-number"><%= orderCount %></span>
+                <span class="stat-label">Orders</span>
+            </div>
 
-    <h2>Recent Orders</h2>
-    <% for(const order of recentOrders){ %>
-        <p>
-            Order #<%= order.orderNumber %> by <%= order.user ? order.user.username : 'deleted user' %>
-            - <%= order.total %> - <%= order.isDelivered ? 'Delivered' : 'Not Delivered' %>
-        </p>
-    <% } %>
+            <div class="card stat-number">
+                <span class="stat-number"><%= pendingCount %></span>
+                <span class="stat-label">Not delivered yet</span>
+            </div>
+        </div>
+
+        <h2 class="section-title">Recent Orders</h2>
+
+        <% if(recentOrders.length === 0){ %>
+            <p class="empty">No orders yet</p>
+        <% } else {%>
+            <div class="receent-list">
+                <% for(const order of recentOrders){ %>
+                    <div class="card recent-order">
+                        <div class="recent-main">
+                            <span class="recent-number"> Order # <%= order.orderNumber %></span>
+                            <p>by <%= order.user ? order.user.username : 'deleted user' %></p>
+                        </div>
+                        <div class="recent-side">
+                            <span class="recent-total">BD <%= order.total %></span>
+                            <% if(order.isDelivered){ %>
+                                <span class="status status-delivered">Delivered</span>
+                            <% } else {%>
+                                <span class="status status-pending">Not Delivered</span>
+                            <% } %>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+        <% } %>
+    </main>
 </body>
 </html>

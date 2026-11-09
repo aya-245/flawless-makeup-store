@@ -3,23 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>All Orders</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/admin/orders.css">
+
 </head>
 <body>
     <%- include('../partials/navbar') %>
-    <% for(const order of orders){ %>
-        <div>
-            <p>Order #<%= order.orderNumber %> by <%= order.user ? order.user.username : 'deleted user' %></p>
-            <p>Total: <%= order.total %></p>
 
-            <% if(order.isDelivered){ %>
-                <p>Delivered</p>
-            <% } else {%>
-                <form action="/admin/orders/<%= order._id %>?_method=PUT" method="post">
-                    <button>Mark as Delivered</button>
-                </form>
-            <% } %>
+    <main class="page">
+        <div class="page-header">
+            <h1>All Orders</h1>
+            <p class="number-of-products"><%= orders.length %> orders</p>
         </div>
-    <% } %>
+        
+        <% if(orders.length === 0){ %>
+            <p class="empty">No orders yet</p>
+        <% } %>
+
+        <% for(const order of orders){ %>
+            <div class="card admin-order">
+                <div>
+                    <p class="order-number">Order #<%= order.orderNumber %></p>
+                        <p class="order-user">by <%= order.user ? order.user.username : 'deleted user' %></p>
+                </div>
+
+                <div class="admin-order-side">
+                        <span class="order-total">BD <%= order.total %></span>
+
+                    <% if(order.isDelivered){ %>
+                        <span class="status status-delivered">Delivered</span>
+                    <% } else {%>
+                        <form action="/admin/orders/<%= order._id %>?_method=PUT" method="post">
+                            <button class="button">Mark as Delivered</button>
+                        </form>
+                    <% } %>
+                </div>
+            </div>
+        <% } %>
+    </main>
 </body>
 </html>

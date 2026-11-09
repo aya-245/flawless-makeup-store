@@ -1,0 +1,34 @@
+.admin-order {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.admin-order p {
+  margin: 0;
+}
+
+.admin-order .order-number {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.order-user {
+  color: var(--gray);
+}
+
+.admin-order-side {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.order-total {
+  font-weight: 700;
+  font-size: 18px;
+}

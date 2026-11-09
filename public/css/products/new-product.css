@@ -1,0 +1,88 @@
+.form-card {
+  max-width: 560px;
+  margin: 40px auto 0;
+  padding: 32px;
+}
+
+.form-card h1 {
+  font-size: 32px;
+  margin: 0 0 24px;
+}
+
+.form {
+  margin-bottom: 20px;
+}
+
+.form label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.form input,
+.form textarea,
+.form select {
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--black);
+  background: #fff;
+}
+
+.form input:focus,
+.form textarea:focus,
+.form select:focus {
+  outline: 2px solid var(--pink);
+  border-color: var(--pink);
+}
+
+.form textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.form input[type="file"] {
+  border-style: dashed;
+  background: var(--cream);
+  padding: 14px;
+  cursor: pointer;
+}
+
+::file-selector-button {
+  background: var(--black);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 8px 16px;
+  margin-right: 12px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.form-row .form {
+  flex: 1;
+  min-width: 180px;
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 8px;
+}
+
+.cancel-link {
+  font-size: 14px;
+  color: var(--gray);
+  text-decoration: underline;
+}

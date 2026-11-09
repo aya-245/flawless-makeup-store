@@ -3,35 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>New Product</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/products/new-product.css">
 </head>
 <body>
     <%- include('../partials/navbar') %>
+    <main class="page">
+        <div class="card form-card">
+            <h1>Create a New Product</h1>
 
-    <h1>Create a New Product</h1>
-                                            <!-- allows the browser to read the upload -->
-    <form action="/products" method="post" enctype="multipart/form-data">
-        <label for="name">Product Name: </label>
-        <input type="text" name="name" id="name">
+            <!-- allows the browser to read the upload -->
+            <form action="/products" method="post" enctype="multipart/form-data">
+                <div class="form">
+                    <label for="name">Product Name: </label>
+                    <input type="text" name="name" id="name">
+                </div>
 
-        <label for="description">Product Description: </label>
-        <input type="text" name="description" id="description">
+                <div class="form">
+                    <label for="description">Product Description: </label>
+                    <textarea type="text" name="description" id="description"></textarea>
+                </div>
 
-        <label for="price">Price: </label>
-        <input type="text" name="price" id="price">
+                <div class="form-row">
+                    <div class="form">
+                        <label for="price">Price: </label>
+                        <input type="text" name="price" id="price">
+                    </div>
 
+                    <div class="form">
+                        <label for="category">Product Category: </label>
+                        <select name="category" id="category">
+                        <% for(let oneCategory of categories){ %>
+                            <option value="<%= oneCategory._id %>"> <%=  oneCategory.categoryName%> </option>
+                        <% } %>
+                        </select>
+                    </div>
+                </div>
 
-        <label for="category">Product Category: </label>
-        <select name="category" id="category">
-            <% for(let oneCategory of categories){ %>
-                <option value="<%= oneCategory._id %>"> <%=  oneCategory.categoryName%> </option>
-            <% } %>
-        </select>
-        <!-- allows file picker to only show images -->
-        <label for="image">Product Image</label>
-        <input type="file" name="image" id="image" accept="image/*">
+                <div class="form">
+                    <!-- allows file picker to only show images -->
+                    <label for="image">Product Image</label>
+                    <input type="file" name="image" id="image" accept="image/*">
+                </div>
 
-        <button>Create Product</button>
-    </form>
+                <div class="form-actions">
+                    <button>Create Product</button>
+                    <a href="/products" class="cancel-link">Cancel</a>
+
+                </div>
+            </form>
+        </div>
+    </main>
 </body>
 </html>

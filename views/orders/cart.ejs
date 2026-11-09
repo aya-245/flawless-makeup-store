@@ -3,26 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Cart</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/cart.css">
 </head>
 <body>
     <%- include('../partials/navbar') %>
 
-    <h1>Cart</h1>
-    <% if (item.product.image) { %>
-        <img src="<%= item.product.image %>" alt="<%= item.product.name %>"
-       style="width:90px; aspect-ratio:1/1; object-fit:cover; border-radius:12px;">
-    <% } %>
+    <main class="page">
 
-    <% if (items.length) { %>
-        <p>Total: <%= total %></p>
+        <div class="page-header">
+            <h1>My Cart</h1>
+        </div>
 
-        <form action="/orders" method="POST">
-            <button>Checkout</button>
-        </form>
-    <% } else { %>
-        <p>Your cart is empty.</p>
-    <% } %>
+        <% if(items.length === 0){ %>
+            <div class="empty-actions">
+                <p class="empty muted">Your cart is empty</p>
+                <a href="/orders/shop" class="button">Continue Shopping</a>
+            </div>
+        <% } else {%>
+            <% let itemCount = 0 %>
+            <% for(const item of items){itemCount += item.quantity } %>
+
+            <div class="cart-items">
+                <% for(const item of items){ %>
+                    <div class="card cart-item">
+                        <% if(item.product.image){ %>
+                            <img class="cart-item-image" src="<%= item.product.image %>" alt="<%= item.product.name %>">
+                        <% } else {%>
+                            <div class="cart-item-image"></div>
+                        <% } %>
+
+                            <div class="cart-item-info">
+                                <h3><%= item.product.name %></h3>
+                                <p class="muted">BD <%=item.product.price %></p>
+
+                                <form action="/orders/cart/<%= item.product._id %>?_method=DELETE" method="post">
+                                    <button class="remove-button">Remove</button>
+                                </form>
+                            </div>
+
+                            <form class="quantity" action="/orders/cart/<%=item.product.id %>?_method=PUT" method="post">
+                                <label for="quantity">Quantity</label>
+                                <input type="number" name="quantity" value="<%= item.quantity %>">
+                                <button class="button">Update</button>
+                            </form>
+                            <span class="in-cart-total">BD <%= Number(item.product.price * item.quantity) %></span>
+                    </div>
+                <% } %>
+            </div>
+            <div class="card cart-summary">
+                <h2>Order Summary</h2>
+
+                <% for(const item of items){ %>
+                    <div class="cart-row">
+                        <span><%= item.product.name %> x <%= item.quantity %></span>
+                        <span>BD <%= item.product.price * item.quantity %></span>
+                    </div>
+                <% } %>
+
+                <div class="cart-total">
+                    <span>Total</span>
+                    <span>BD <%= total %></span>
+                </div>
+
+                <form action="/orders" method="post">
+                    <button class="button">Checkout</button>
+                </form>
+
+                <a href="/orders/shop" class="continue-link">Continue Shopping</a>
+            </div>
+        <% } %>
+    </main>
 
 </body>
 </html>

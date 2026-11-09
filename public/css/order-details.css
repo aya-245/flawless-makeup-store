@@ -16,7 +16,6 @@
   margin: 0 0 32px;
 }
 
-/* ---------- tracker ---------- */
 .tracker {
   display: flex;
   margin-bottom: 40px;
@@ -70,7 +69,6 @@
   color: #fff;
 }
 
-/* ---------- items and summary ---------- */
 .order-layout {
   display: flex;
   gap: 32px;

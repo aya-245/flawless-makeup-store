@@ -3,37 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Edit Product</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/products/new-product.css">
 </head>
 <body>
     <%- include('../partials/navbar') %>
 
-    <h1>Edit Product</h1>
-    <form action="/products/<%=product._id %>?_method=PUT" method="post" enctype="multipart/form-data">
-         <label for="name">Product Name: </label>
-        <input value="<%=product.name%>" type="text" name="name" id="name">
+    <main class="page">
+        <div class="card form-card">
+            <h1>Edit Product</h1>
 
-        <label for="description">Product Description: </label>
-        <input value="<%=product.description%>" type="text" name="description" id="description">
+            <form action="/products/<%=product._id %>?_method=PUT" method="post" enctype="multipart/form-data">
 
-        <label for="price">Price: </label>
-        <input value="<%=product.price%>" type="text" name="price" id="price">
+                <div class="form">
+                    <label for="name">Product Name: </label>
+                    <input value="<%=product.name%>" type="text" name="name" id="name">
+                </div>
 
-        <label for="category">Product Category: </label>
-            <select name="category" id="category">
-                <% for(let oneCategory of categories){ %>
+                <div class="form">
+                    <label for="description">Product Description: </label>
+                    <textarea name="description" id="description"><%= product.description %></textarea>
+                </div>
 
-                    <option <% if(oneCategory._id.equals(product.category)) {%> selected <% } %>value="<%= oneCategory._id %>"> <%=  oneCategory.categoryName%> </option>
-                <% } %>
-            </select>
-        
-        <!-- allows file picker to only show images -->
-        <label for="image">Product Image</label>
-        <input type="file" name="image" id="image" accept="image/*">
-        
+                <div class="form-row">
+                    <div class="form">
+                        <label for="price">Price (BD): </label>
+                        <input value="<%=product.price%>" type="text" name="price" id="price">
+                    </div>
+                </div>
 
+                <div class="form">
+                    <label for="category">Category</label>
+                    <select name="category" id="category">
+                        <% for(let oneCategory of categories){ %>
+                            <option <% if(oneCategory._id.equals(product.category)) {%> selected <% } %>value="<%= oneCategory._id %>"> <%=  oneCategory.categoryName%> </option>
+                        <% } %>
+                    </select>
+                </div>
 
-        <button>Edit Product</button>
-    </form>
+                <div class="form">
+                    <label for="image">Product Image</label>
+                    <% if(product.image){ %>
+                        <img class="current-image" src="<%=product.image %>" alt="<%=product.name %>">
+                    <% } %>
+
+                    <!-- allows file picker to only show images -->
+                    <input type="file" name="image" id="image" accept="image/*">
+                    <p class="muted">Leave empty to keep current image</p>
+                </div>
+
+                <div class="form-actions">
+                    <button class="button">Save Changes</button>
+                    <a href="/products/<%= product._id %>" class="cancel-link">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </main>
 </body>
 </html>

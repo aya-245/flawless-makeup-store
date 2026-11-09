@@ -86,3 +86,12 @@
   color: var(--gray);
   text-decoration: underline;
 }
+
+.current-image {
+  display: block;
+  width: 100%;
+  max-width: 320px;   
+  height: auto;
+  border-radius: 16px;
+  margin-bottom: 12px;
+}

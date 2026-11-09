@@ -1,28 +1,42 @@
-<nav>
-    
-    <a href="/">Homepage</a>
+<nav class="navbar">
+    <div class="nav-inner">
+        <div class="nav-left">
+                <a href="/">Homepage</a>
+            <% if (user){ %>
 
-    <% if (user){ %>
-        <% if(user.role === 'admin'){%>
-            <a href="/products/new">Creat a New Product</a>
-            <a href="/products">See All Products</a>
-        <% } %>
+                <% if(user.role === 'admin'){%>
+                    <a href="/admin">Dashboard</a>
+                    <a href="/products/new">Creat a New Product</a>
+                    <a href="/products">See All Products</a>
+                <% } %>
 
-    <% if(user.role === 'customer'){ %>
-        <a href="/orders/shop">Shop</a>
-        <a href="/orders/cart">Cart</a>
-        <a href="/orders">My Orders</a>
-    <% } %>
+                <% if(user.role === 'customer'){ %>
+                    <a href="/orders/shop">Shop</a>
+                    <a href="/orders">My Orders</a>
+                <% } %>
 
-    <% if(user.role === 'driver'){ %>
-        <a href="/delivery">Dashboard</a>
-    <% } %>
+                <% if(user.role === 'driver'){ %>
+                    <a href="/delivery">Dashboard</a>
+                <% } %>
 
-    <a href="/auth/sign-out">Logout</a>
+            <% } else { %>
+                <a href="/orders/shop">Shop</a>
+            <% } %>
+        </div>
 
-    <% } else { %>
-        <a href="/orders/shop">Shop</a>
-        <a href="/auth/sign-up">Sign up</a>
-        <a href="/auth/sign-in">Login</a>
-    <% } %>
+        <a href="/" class="logo">Flawless</a>
+
+        <div class="nav-right">
+            <% if(user){ %>
+                <% if(user.role === 'customer') {%>
+                    <a href="/orders/cart">Cart</a>
+                <% } %>
+
+                <a href="/auth/sign-out">Logout</a>
+            <% } else{%>
+                <a href="/auth/sign-up">Sign Up</a>
+                <a href="/auth/sign-in">Login</a>
+            <% } %>
+        </div>
+    </div>
 </nav>

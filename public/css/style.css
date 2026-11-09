@@ -150,3 +150,38 @@ h1, h2, .logo {
   padding: 64px 0;
 }
 
+/* ---------- navbar ---------- */
+.navbar {
+  background: #F5D4D6;
+  border-bottom: 1px solid #eee;
+}
+
+.nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 40px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+.nav-left,
+.nav-right {
+  display: flex;
+  gap: 28px;
+  flex: 1;
+}
+
+.nav-right {
+  justify-content: flex-end;
+}
+
+.nav-inner a:hover {
+  color: var(--pink);
+}
+
+.logo {
+  font-size: 28px;
+}
+
+

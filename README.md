@@ -119,10 +119,11 @@ Delivery Routes
 
 
 ## Future Enhancements
-1. Add exporting stats to pdf or excel feature
-2. Add search and filter features
-3. Add email confirmation
-4. Add toasts
+1. Payment Gateaway
+2. Add exporting stats to pdf or excel feature
+3. Add search and filter features
+4. Add email confirmation
+5. Add toasts
 
 
 
